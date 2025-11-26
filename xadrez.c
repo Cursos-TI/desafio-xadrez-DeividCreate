@@ -29,33 +29,27 @@
     // Inclua o uso de continue e break dentro dos loops.
 
 
-    #include <stdio.h>
+ // Desafio de Xadrez - MateCheck
+#include <stdio.h>
 
-
-                   // Declaração das variaveis 
-
+// Declaração das variáveis
 const int PASSOS_BISPO  = 5;   // Bispo: 5 casas na diagonal superior direita
 const int PASSOS_TORRE  = 5;   // Torre: 5 casas para a direita
 const int PASSOS_RAINHA = 8;   // Rainha: 8 casas para a esquerda
+const int PASSOS_CAVALO = 2;   // Cavalo: 2 para baixo + 1 esquerda
 
 int main() {
 
-    
-    //  BISPO - Diagonal superior direita = Cima + Direita ao mesmo tempo
-   
+    //  BISPO - Diagonal superior direita (Cima + Direita)
     printf("=== Movimento do Bispo ===\n");
-
     for (int i = 1; i <= PASSOS_BISPO; i++) {
         printf("Passo %d: Cima / Direita (Diagonal)\n", i);
     }
 
     printf("\n");
 
-    
-    // TORRE - Direita (somente horizontal)
-   
+    // TORRE - Direita
     printf("=== Movimento da Torre ===\n");
-
     int contador = 1;
     while (contador <= PASSOS_TORRE) {
         printf("Passo %d: Direita\n", contador);
@@ -64,20 +58,42 @@ int main() {
 
     printf("\n");
 
-   
-    // RAINHA - Esquerda (horizontal)
-   
+    // RAINHA - Esquerda
     printf("=== Movimento da Rainha ===\n");
-
     int passo = 1;
     do {
         printf("Passo %d: Esquerda\n", passo);
         passo++;
     } while (passo <= PASSOS_RAINHA);
 
+    printf("\n");
+
+ 
+    // CAVALO - 2 para BAIXO e 1 para ESQUERDA
+    
+    printf("=== Movimento do Cavalo ===\n");
+
+    int total = PASSOS_CAVALO + 1;  // 2 baixos + 1 esquerda = 3
+
+    for (int j = 1; j <= total; j++) {
+
+        int k = j;
+
+        // WHILE que imprime ESQUERDA apenas no último passo
+        while (k > PASSOS_CAVALO) {
+            printf("Passo %d: Esquerda\n", j);
+            break; // evita loop infinito
+        }
+
+        // WHILE que imprime BAIXO nos primeiros passos
+        while (k <= PASSOS_CAVALO) {
+            printf("Passo %d: Baixo\n", j);
+            break;
+        }
+    }
+
     printf("\n=== Fim da Execução ===\n");
 
     return 0;
 }
-
 
