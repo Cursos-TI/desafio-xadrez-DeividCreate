@@ -32,68 +32,95 @@
  // Desafio de Xadrez - MateCheck
 #include <stdio.h>
 
-// Declaração das variáveis
-const int PASSOS_BISPO  = 5;   // Bispo: 5 casas na diagonal superior direita
-const int PASSOS_TORRE  = 5;   // Torre: 5 casas para a direita
-const int PASSOS_RAINHA = 8;   // Rainha: 8 casas para a esquerda
-const int PASSOS_CAVALO = 2;   // Cavalo: 2 para baixo + 1 esquerda
+// Quantidade de passos de cada peça
+const int PASSOS_TORRE  = 5;  // 5 passos para a direita
+const int PASSOS_BISPO  = 5;  // 5 passos na diagonal cima/direita
+const int PASSOS_RAINHA = 8;  // 8 passos para a esquerda
+const int PASSOS_CAVALO = 2;  // 2 cima + 1 direita
 
-int main() {
 
-    //  BISPO - Diagonal superior direita (Cima + Direita)
-    printf("=== Movimento do Bispo ===\n");
-    for (int i = 1; i <= PASSOS_BISPO; i++) {
-        printf("Passo %d: Cima / Direita (Diagonal)\n", i);
+// TORRE – Move apenas para a direita
+void mover_Torre(int casas)
+{
+    if (casas == 0) {
+        printf("Torre terminou o movimento.\n\n");
+        return;
     }
 
-    printf("\n");
+    int passo = PASSOS_TORRE - casas + 1;
+    printf("Passo %d = Direita\n", passo);
 
-    // TORRE - Direita
-    printf("=== Movimento da Torre ===\n");
-    int contador = 1;
-    while (contador <= PASSOS_TORRE) {
-        printf("Passo %d: Direita\n", contador);
-        contador++;
+    mover_Torre(casas - 1);   // chama de novo diminuindo 1 casa
+}
+
+
+// RAINHA – Move apenas para a esquerda
+void mover_Rainha(int casas)
+{
+    if (casas == 0) {
+        printf("Rainha terminou o movimento.\n\n");
+        return;
     }
 
-    printf("\n");
+    int passo = PASSOS_RAINHA - casas + 1;
+    printf("Passo %d = Esquerda\n", passo);
 
-    // RAINHA - Esquerda
-    printf("=== Movimento da Rainha ===\n");
-    int passo = 1;
-    do {
-        printf("Passo %d: Esquerda\n", passo);
-        passo++;
-    } while (passo <= PASSOS_RAINHA);
+    mover_Rainha(casas - 1);
+}
 
-    printf("\n");
 
- 
-    // CAVALO - 2 para BAIXO e 1 para ESQUERDA
-    
-    printf("=== Movimento do Cavalo ===\n");
+// BISPO – Move para cima/direita (diagonal)
+void mover_Bispo(int casas)
+{
+    if (casas == 0) {
+        printf("Bispo terminou o movimento.\n\n");
+        return;
+    }
 
-    int total = PASSOS_CAVALO + 1;  // 2 baixos + 1 esquerda = 3
+    int passo = PASSOS_BISPO - casas + 1;
+    printf("Passo %d = Cima / Direita\n", passo);
 
-    for (int j = 1; j <= total; j++) {
+    mover_Bispo(casas - 1);
+}
 
-        int k = j;
 
-        // WHILE que imprime ESQUERDA apenas no último passo
-        while (k > PASSOS_CAVALO) {
-            printf("Passo %d: Esquerda\n", j);
-            break; // evita loop infinito
+// CAVALO – Movimento em L (2 cima + 1 direita)
+void mover_Cavalo()
+{
+    printf("Cavalo faz movimento em L (2 Cima, 1 Direita)\n");
+
+    int total = PASSOS_CAVALO + 1;  // 2 cima + 1 direita = 3 passos
+
+    for (int i = 1; i <= total; i++) {
+
+        if (i <= PASSOS_CAVALO) {
+            printf("Passo %d = Cima\n", i);
+            continue;   // vai para o próximo passo
         }
 
-        // WHILE que imprime BAIXO nos primeiros passos
-        while (k <= PASSOS_CAVALO) {
-            printf("Passo %d: Baixo\n", j);
-            break;
-        }
+        printf("Passo %d = Direita\n", i);
+        break;   // encerra o loop
     }
 
-    printf("\n=== Fim da Execução ===\n");
+    printf("Cavalo terminou o movimento.\n\n");
+}
+
+
+
+// MAIN – Chama todas as funções
+int main()
+{
+    printf("==== TORRE ====\n");
+    mover_Torre(PASSOS_TORRE);
+
+    printf("==== BISPO ====\n");
+    mover_Bispo(PASSOS_BISPO);
+
+    printf("==== RAINHA ====\n");
+    mover_Rainha(PASSOS_RAINHA);
+
+    printf("==== CAVALO ====\n");
+    mover_Cavalo();
 
     return 0;
 }
-
